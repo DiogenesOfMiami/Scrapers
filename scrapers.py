@@ -82,7 +82,7 @@ def url_scraper(URL):
     import urllib.request
     with urllib.request.urlopen(URL) as u:
 	    lines = u.read()
-	    return lines
+	    return str(lines)
 
 def html_scraper(HTML):
     '''
@@ -91,19 +91,39 @@ def html_scraper(HTML):
     Returns text of embedded lists (starting at <ul><li>).
     '''
     writing = False
-    scan = '12345678'
+    tagscan = False
+    tag = ''
+    current_tags = {}
     return_string = ''
     for char in HTML:
 
-        scan = scan[1:]
-        scan = scan+char
+        if tagscan == True:
+            tag = tag+char
+
+        if char == '<':
+            tagscan = True
+            tag = char
+        elif char == '>':
+            tagscan = False
+            if '/' in tag:
+                current_tags[tag.replace('/', '')] -= 1
+            else:
+                if tag in current_tags:
+                    current_tags[tag] += 1
+                    print(tag, current_tags[tag])                           #Debug printing
+                else:
+                    current_tags[tag] = 1
+                    print(tag, current_tags[tag])                           #Debug printing
+            tag = ''
 
         if writing == True:
             return_string = return_string+char
-        if scan == '<ul><li>':
-            writing = True
-        elif scan == ''
-    
+        
+        if '<ul>' in current_tags and current_tags['<ul>'] == 1 and '<li>' in current_tags and current_tags['<li>'] == 1:
+            writing == True
+        else:
+            writing == False
+
     return return_string
 
-print(html_scraper('banana<ul>\n<ul><li><b>French Narrator:</b> Ah, the sea... so fascinating. So wonderful. Here, we see Bikini Bottom, teeming with life. <i>[shows from left to right Patrick\'s, Squidward\'s, and SpongeBob\'s houses. Zooms in on SpongeBob\'s house.]</i> Home to one of my favorite creatures, SpongeBob SquarePants. Yes, of course he lives in a'))
+print(html_scraper(url_scraper('https://spongebob.fandom.com/wiki/Help_Wanted/transcript')))

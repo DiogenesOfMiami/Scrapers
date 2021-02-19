@@ -92,6 +92,7 @@ def html_scraper(HTML):
     '''
     writing = False
     possible_tag = False
+    possible_tag_end = False
     scan = ''
     return_string = ''
     for char in HTML:
@@ -99,9 +100,10 @@ def html_scraper(HTML):
         if char == '<':
             possible_tag = True
             writing = False
-            scan = scan+char
         elif char == '>':
-            scan = scan+char
+            possible_tag_end = True
+        else:
+            possible_tag_end = False
         if writing == True:
             return_string = return_string+char
         elif possible_tag == True:
@@ -109,21 +111,8 @@ def html_scraper(HTML):
         if scan == '<ul><li>':
             writing = True
             possible_tag = False
-        
+            possible_tag_end = False
+    
+    return return_string
 
-
-    # all_words: file
-    with open(filename, 'r') as f:
-    # line: string
-        line = f.readline()
-    # wordlist: list of strings
-    wordlist = line.split()
-
-    with open('new_'+ filename, 'w') as f:
-        for item in wordlist:
-            f.write("%s\n" % item)
-
-
-
-
-words_to_list('Help_Wanted_Raw.txt')
+print(html_scraper('banana<ul>\n<ul><li><b>French Narrator:</b> Ah, the sea... so fascinating. So wonderful. Here, we see Bikini Bottom, teeming with life. <i>[shows from left to right Patrick\'s, Squidward\'s, and SpongeBob\'s houses. Zooms in on SpongeBob\'s house.]</i> Home to one of my favorite creatures, SpongeBob SquarePants. Yes, of course he lives in a'))

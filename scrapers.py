@@ -91,27 +91,18 @@ def html_scraper(HTML):
     Returns text of embedded lists (starting at <ul><li>).
     '''
     writing = False
-    possible_tag = False
-    possible_tag_end = False
-    scan = ''
+    scan = '12345678'
     return_string = ''
     for char in HTML:
-        
-        if char == '<':
-            possible_tag = True
-            writing = False
-        elif char == '>':
-            possible_tag_end = True
-        else:
-            possible_tag_end = False
+
+        scan = scan[1:]
+        scan = scan+char
+
         if writing == True:
             return_string = return_string+char
-        elif possible_tag == True:
-            scan = scan+char
         if scan == '<ul><li>':
             writing = True
-            possible_tag = False
-            possible_tag_end = False
+        elif scan == ''
     
     return return_string
 

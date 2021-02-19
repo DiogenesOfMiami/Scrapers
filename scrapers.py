@@ -103,7 +103,7 @@ def html_scraper(HTML):
         if char == '<':
             tagscan = True
             tag = char
-        elif char == '>':
+        elif char == '>' #or char == ' ':                                   #Possible lead
             tagscan = False
             if '/' in tag:
                 if tag.replace('/', '') in current_tags:
@@ -122,9 +122,9 @@ def html_scraper(HTML):
         if writing == True:
             return_string = return_string+char
 
-        print('<ul>' in current_tags)       #Debug
+        #print('<ul>' in current_tags)       #Debug
         #print(current_tags['<ul>'] == 1)    #Debug
-        print('<li>' in current_tags)       #Debug
+        #print('<li>' in current_tags)       #Debug
         #print(current_tags['<li>'] == 1)    #Debug
         
         if '<ul>' in current_tags and current_tags['<ul>'] == 1 and '<li>' in current_tags and current_tags['<li>'] == 1:
@@ -135,6 +135,6 @@ def html_scraper(HTML):
     return return_string
 
 #Uncomment for final test:
-#print(html_scraper(url_scraper('https://spongebob.fandom.com/wiki/Help_Wanted/transcript')))
+print(html_scraper(url_scraper('https://spongebob.fandom.com/wiki/Help_Wanted/transcript')))
 
-print(html_scraper('abc\n<ul><li><b>French Narrator:</b> Ah, the sea... so fascinating. So wonderful. Here, we see Bikini Bottom, teeming with life. <i>[shows from left to right Patrick\'s, Squidward\'s, and SpongeBob\'s houses. Zooms in on SpongeBob\'s house.]</i> Home to one of my favorite creatures, SpongeBob SquarePants. Yes, of course he lives in a'))
+#print(html_scraper('abc\n<ul><li><b>French Narrator:</b> Ah, the sea... so fascinating. So wonderful. Here, we see Bikini Bottom, teeming with life. <i>[shows from left to right Patrick\'s, Squidward\'s, and SpongeBob\'s houses. Zooms in on SpongeBob\'s house.]</i> Home to one of my favorite creatures, SpongeBob SquarePants. Yes, of course he lives in a'))

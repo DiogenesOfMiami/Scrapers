@@ -123,14 +123,14 @@ def html_scraper(HTML):
             return_string = return_string+char
 
         print('<ul>' in current_tags)       #Debug
-        print(current_tags['<ul>'] == 1)    #Debug
+        #print(current_tags['<ul>'] == 1)    #Debug
         print('<li>' in current_tags)       #Debug
-        print(current_tags['<li>'] == 1)    #Debug
+        #print(current_tags['<li>'] == 1)    #Debug
         
         if '<ul>' in current_tags and current_tags['<ul>'] == 1 and '<li>' in current_tags and current_tags['<li>'] == 1:
-            writing == True
+            writing = True
         else:
-            writing == False
+            writing = False
 
     return return_string
 

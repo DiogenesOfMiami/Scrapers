@@ -106,7 +106,10 @@ def html_scraper(HTML):
         elif char == '>':
             tagscan = False
             if '/' in tag:
-                current_tags[tag.replace('/', '')] -= 1
+                if tag.replace('/', '') in current_tags:
+                    current_tags[tag.replace('/', '')] -= 1
+                else:
+                    current_tags[tag.replace('/', '')] = -1
             else:
                 if tag in current_tags:
                     current_tags[tag] += 1
@@ -126,4 +129,7 @@ def html_scraper(HTML):
 
     return return_string
 
-print(html_scraper(url_scraper('https://spongebob.fandom.com/wiki/Help_Wanted/transcript')))
+#Uncomment for final test:
+#print(html_scraper(url_scraper('https://spongebob.fandom.com/wiki/Help_Wanted/transcript')))
+
+print(html_scraper('abc\n<ul><li><b>French Narrator:</b> Ah, the sea... so fascinating. So wonderful. Here, we see Bikini Bottom, teeming with life. <i>[shows from left to right Patrick\'s, Squidward\'s, and SpongeBob\'s houses. Zooms in on SpongeBob\'s house.]</i> Home to one of my favorite creatures, SpongeBob SquarePants. Yes, of course he lives in a'))

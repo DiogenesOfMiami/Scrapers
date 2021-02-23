@@ -94,6 +94,7 @@ def html_scraper(HTML):
     tag = ''
     current_tags = {}
     return_string = ''
+
     for char in HTML:
 
         if tagscan == True:
@@ -102,8 +103,9 @@ def html_scraper(HTML):
         if char == '<':
             tagscan = True
             tag = char
-        elif char == '>': #or char == ' ':                                   Possible lead
+        elif char == '>' or char == ' ':                                   #Possible lead
             tagscan = False
+            tag = tag+'>'
             if '/' in tag:
                 if tag.replace('/', '') in current_tags:
                     current_tags[tag.replace('/', '')] -= 1
@@ -112,10 +114,10 @@ def html_scraper(HTML):
             else:
                 if tag in current_tags:
                     current_tags[tag] += 1
-                    print(tag, current_tags[tag])                           #Debug
+                    #print(tag, current_tags[tag])                           #Debug
                 else:
                     current_tags[tag] = 1
-                    print(tag, current_tags[tag])                           #Debug
+                    #print(tag, current_tags[tag])                           #Debug
             tag = ''
 
         if writing == True:
@@ -130,6 +132,9 @@ def html_scraper(HTML):
             writing = True
         else:
             writing = False
+
+    print(current_tags)                                                     #Debug
+    print(return_string)                                                    #Debug
 
     return return_string
 

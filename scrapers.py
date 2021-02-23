@@ -1,5 +1,3 @@
-from string import ascii_lowercase
-
 def MIT_to_standard(filename):
     """
     Scrapes words from MIT style file (all words in one line). 
@@ -28,6 +26,7 @@ def words_to_list(filename):
 
     Returns list of words.
     """
+    from string import ascii_lowercase
     print("Scraping words from file...")
     # all_words: file
     with open('words.txt') as all_words:
@@ -103,7 +102,7 @@ def html_scraper(HTML):
         if char == '<':
             tagscan = True
             tag = char
-        elif char == '>' #or char == ' ':                                   #Possible lead
+        elif char == '>': #or char == ' ':                                   Possible lead
             tagscan = False
             if '/' in tag:
                 if tag.replace('/', '') in current_tags:

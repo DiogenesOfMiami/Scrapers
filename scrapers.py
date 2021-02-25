@@ -97,15 +97,15 @@ def html_scraper(HTML):
     ul_count = 1
     li_count = 1
 
-    fascinating = False
+    target_dialogue = "Ah, the sea... so fascinating."                      #Targeting
+    tags_printed = False                                                    #Targeting
 
     for char in HTML:
 
-        if fascinating == False and "Ah, the sea... so fascinating." in return_string:       #Debug if
-
-            fascinating = True                                                              #Debug if
-
-            print(current_tags, '\n', '\n',)                                                #Debug if
+        #To find how many tags are active at the target_dialogue:
+        if not tags_printed and target_dialogue in return_string:       #Debug
+            print('\n', '\n', current_tags, '\n', '\n',)                #Debug
+            tags_printed = True                                         #Debug
 
         if char == '<':
             tagscan = True
@@ -150,5 +150,7 @@ def html_scraper(HTML):
 
 #Uncomment for final test:
 #print(html_scraper(url_scraper('https://spongebob.fandom.com/wiki/Help_Wanted/transcript')))
+html_scraper(url_scraper('https://spongebob.fandom.com/wiki/Help_Wanted/transcript'))
 
+#Baby test:
 #print(html_scraper('abc\n<ul><li><b>French Narrator:</b> Ah, the sea... so fascinating. So wonderful. Here, we see Bikini Bottom, teeming with life. <i>[shows from left to right Patrick\'s, Squidward\'s, and SpongeBob\'s houses. Zooms in on SpongeBob\'s house.]</i> Home to one of my favorite creatures, SpongeBob SquarePants. Yes, of course he lives in a'))

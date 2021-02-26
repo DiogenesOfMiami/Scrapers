@@ -89,6 +89,8 @@ def html_scraper(HTML):
 
     Returns text of embedded lists (starting at <ul><li>).
     '''
+    from string import ascii_letters
+
     writing = False
     tagscan = False
     tag = ''
@@ -100,20 +102,22 @@ def html_scraper(HTML):
     exclamation_dash_dash_count = 3
     b_count = 0
     i_count = 0
+    font_count = 0
 
-    target_dialogue = "One hydrodynamic spatula with"                                     #Targeting
-    tags_printed = False                                                    #Targeting
+    target_dialogue = "colormaroon"                                     #Tag finding
+    tags_printed = False                                                #Tag finding
 
     for char in HTML:
 
+        #Tag finding
         #To find how many tags are active at the target_dialogue:
-        # if not tags_printed and target_dialogue in return_string:       #Debug
-        #     #print('\n', '\n', current_tags, '\n', '\n',)                #Debug
-        #     print('\n')
-        #     for key in current_tags:
-        #         print("'"+key+"':", current_tags[key])
-        #     print('\n')
-        #     tags_printed = True                                         #Debug
+        if not tags_printed and target_dialogue in return_string:       
+            #print('\n', '\n', current_tags, '\n', '\n',)                
+            print('\n')
+            for key in current_tags:
+                print("'"+key+"':", current_tags[key])
+            print('\n')
+            tags_printed = True                                         
 
         if char == '<':
             tagscan = True
@@ -138,15 +142,19 @@ def html_scraper(HTML):
             if tagscan == True:
                 tag = tag+char
 
-        if writing == True:
-            return_string = return_string+char
-
+        if writing == True and tagscan == False:
+            if char in ascii_letters or char == ' ':
+                return_string = return_string+char
+            elif char == "\'":
+                return_string = return_string+"'"
+            
+            
         #print('<ul>' in current_tags)       #Debug
         #print(current_tags['<ul>'] == 1)    #Debug
         #print('<li>' in current_tags)       #Debug
         #print(current_tags['<li>'] == 1)    #Debug
         
-        if '<i>' in current_tags and current_tags['<i>'] == i_count and '<b>' in current_tags and current_tags['<b>'] == b_count and '<!-->' in current_tags and current_tags['<!-->'] == exclamation_dash_dash_count and '<ul>' in current_tags and current_tags['<ul>'] == ul_count and '<li>' in current_tags and current_tags['<li>'] == li_count and '<a>' in current_tags and current_tags['<a>'] == a_count:
+        if '<font>' in current_tags and current_tags['<font>'] == font_count and '<i>' in current_tags and current_tags['<i>'] == i_count and '<b>' in current_tags and current_tags['<b>'] == b_count and '<!-->' in current_tags and current_tags['<!-->'] == exclamation_dash_dash_count and '<ul>' in current_tags and current_tags['<ul>'] == ul_count and '<li>' in current_tags and current_tags['<li>'] == li_count and '<a>' in current_tags and current_tags['<a>'] == a_count:
             writing = True
         else:
             writing = False
@@ -154,11 +162,12 @@ def html_scraper(HTML):
     #print(current_tags)                                                     #Debug
     #print(return_string)                                                    #Debug
 
+    print('\n'+"Ran successfully"+'\n')
     return return_string
 
 #Uncomment for final test:
 #print(html_scraper(url_scraper('https://spongebob.fandom.com/wiki/Help_Wanted/transcript')))
-print('\n'+html_scraper(url_scraper('https://spongebob.fandom.com/wiki/Help_Wanted/transcript')))
+print(html_scraper(url_scraper('https://spongebob.fandom.com/wiki/Help_Wanted/transcript'))+'\n')
 
 #Baby test:
 #print(html_scraper('abc\n<ul><li><b>French Narrator:</b> Ah, the sea... so fascinating. So wonderful. Here, we see Bikini Bottom, teeming with life. <i>[shows from left to right Patrick\'s, Squidward\'s, and SpongeBob\'s houses. Zooms in on SpongeBob\'s house.]</i> Home to one of my favorite creatures, SpongeBob SquarePants. Yes, of course he lives in a'))
